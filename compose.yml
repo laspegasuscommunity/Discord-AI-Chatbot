@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  celestia:
+    build:
+      dockerfile: Dockerfile
+      context: "./src"
+    container_name: celestia
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
+    image: ponfertato/discord-ai:main
+    env_file: celestia.env
+    labels:
+      com.centurylinklabs.watchtower.enable: "false"
+      traefik.enable: "false"
+  luna:
+    build:
+      dockerfile: Dockerfile
+      context: "./src"
+    container_name: luna
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
+    image: ponfertato/discord-ai:main
+    env_file: luna.env
+    labels:
+      com.centurylinklabs.watchtower.enable: "false"
+      traefik.enable: "false"
+
+networks:
+  default:
+    external: true
+    name: $NETWORK
